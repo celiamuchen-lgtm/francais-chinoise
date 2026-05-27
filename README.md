@@ -25,6 +25,8 @@ Bonjour je voudrais aller à Paris merci
 
 - 拼音转中文，例如 `wo xiang qu bali` -> `我想去巴黎`
 - 中文短语优先匹配，例如“请问洗手间在哪里”
+- 地理与规划论文词汇，例如“热岛效应” -> `l'îlot de chaleur`
+- GIS 与环境词汇，例如“地表温度” -> `la température de surface`
 - 常用词词典匹配
 - 中文标点转换为法语排版标点
 - 一键复制完整法语结果
