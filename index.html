@@ -21,8 +21,8 @@
 
         <div class="editor-grid">
           <label class="panel input-panel">
-            <span class="panel-label">中文</span>
-            <textarea id="sourceInput" placeholder="例如：你好，我想喝咖啡。谢谢！" autofocus></textarea>
+            <span class="panel-label">拼音 / 中文</span>
+            <textarea id="sourceInput" placeholder="例如：nihao wo xiang qu bali xiexie" autofocus></textarea>
           </label>
 
           <section class="panel output-panel" aria-live="polite">
@@ -34,6 +34,14 @@
           </section>
         </div>
 
+        <section class="candidate-area pinyin-area" aria-label="拼音转中文">
+          <div class="panel-row">
+            <h2>中文预览</h2>
+            <span id="pinyinMode">自动识别</span>
+          </div>
+          <output id="chinesePreview">你好，我想喝咖啡。谢谢！</output>
+        </section>
+
         <section class="candidate-area" aria-label="候选法语词">
           <div class="panel-row">
             <h2>候选词</h2>
@@ -43,9 +51,9 @@
         </section>
 
         <section class="tips">
-          <button class="quick-chip" type="button" data-example="你好，我叫木晨。">你好，我叫木晨。</button>
-          <button class="quick-chip" type="button" data-example="我想去巴黎。">我想去巴黎。</button>
-          <button class="quick-chip" type="button" data-example="请问洗手间在哪里？">请问洗手间在哪里？</button>
+          <button class="quick-chip" type="button" data-example="nihao wo jiao muchen">nihao wo jiao muchen</button>
+          <button class="quick-chip" type="button" data-example="wo xiang qu bali">wo xiang qu bali</button>
+          <button class="quick-chip" type="button" data-example="qingwen xishoujian zai nali">qingwen xishoujian zai nali</button>
         </section>
       </section>
     </main>

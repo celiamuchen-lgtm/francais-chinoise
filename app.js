@@ -51,6 +51,58 @@ const dictionary = [
   ["吗", ""]
 ].sort((a, b) => b[0].length - a[0].length);
 
+const pinyinDictionary = [
+  ["qingwen xishoujian zai nali", "请问洗手间在哪里"],
+  ["wo xiang he kafei", "我想喝咖啡"],
+  ["wo xiang qu bali", "我想去巴黎"],
+  ["wo jiao muchen", "我叫木晨"],
+  ["nihao", "你好"],
+  ["nin hao", "您好"],
+  ["xiexie", "谢谢"],
+  ["bu keqi", "不客气"],
+  ["duibuqi", "对不起"],
+  ["zaijian", "再见"],
+  ["faguo", "法国"],
+  ["fayu", "法语"],
+  ["zhongwen", "中文"],
+  ["zhongguo", "中国"],
+  ["bali", "巴黎"],
+  ["xuexiao", "学校"],
+  ["daxue", "大学"],
+  ["laoshi", "老师"],
+  ["xuesheng", "学生"],
+  ["pengyou", "朋友"],
+  ["jia", "家"],
+  ["shui", "水"],
+  ["kafei", "咖啡"],
+  ["cha", "茶"],
+  ["mianbao", "面包"],
+  ["jintian", "今天"],
+  ["mingtian", "明天"],
+  ["zuotian", "昨天"],
+  ["xianzai", "现在"],
+  ["wo", "我"],
+  ["ni", "你"],
+  ["ta", "他"],
+  ["women", "我们"],
+  ["tamen", "他们"],
+  ["shi", "是"],
+  ["you", "有"],
+  ["qu", "去"],
+  ["lai", "来"],
+  ["chi", "吃"],
+  ["he", "喝"],
+  ["xiang", "想"],
+  ["keyi", "可以"],
+  ["xihuan", "喜欢"],
+  ["xuyao", "需要"],
+  ["zai nali", "在哪里"],
+  ["duoshao", "多少"],
+  ["weishenme", "为什么"],
+  ["qing", "请"],
+  ["ma", "吗"]
+].sort((a, b) => b[0].length - a[0].length);
+
 const punctuationMap = {
   "，": ", ",
   "。": ". ",
@@ -62,12 +114,78 @@ const punctuationMap = {
   "\n": "\n"
 };
 
+const latinPunctuationMap = {
+  ",": "，",
+  ".": "。",
+  "!": "！",
+  "?": "？",
+  ";": "；",
+  ":": "：",
+  "\n": "\n"
+};
+
 const sourceInput = document.querySelector("#sourceInput");
 const translationOutput = document.querySelector("#translationOutput");
 const candidates = document.querySelector("#candidates");
 const matchCount = document.querySelector("#matchCount");
 const copyButton = document.querySelector("#copyButton");
 const clearButton = document.querySelector("#clearButton");
+const chinesePreview = document.querySelector("#chinesePreview");
+const pinyinMode = document.querySelector("#pinyinMode");
+
+function normalizePinyin(value) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/v/g, "u")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function inputLooksLikePinyin(value) {
+  return /[a-zA-Z]/.test(value) && !/[\u3400-\u9fff]/.test(value);
+}
+
+function pinyinToChinese(text) {
+  const normalized = normalizePinyin(text);
+  let index = 0;
+  const tokens = [];
+
+  while (index < normalized.length) {
+    const char = normalized[index];
+
+    if (latinPunctuationMap[char]) {
+      tokens.push(latinPunctuationMap[char]);
+      index += 1;
+      continue;
+    }
+
+    if (/\s/.test(char)) {
+      index += 1;
+      continue;
+    }
+
+    const found = pinyinDictionary.find(([py]) => {
+      if (!normalized.startsWith(py, index)) return false;
+      const next = normalized[index + py.length];
+      return !next || /\s|[,.;:!?]/.test(next);
+    });
+
+    if (found) {
+      tokens.push(found[1]);
+      index += found[0].length;
+      continue;
+    }
+
+    const nextSpace = normalized.slice(index).search(/\s|[,.;:!?]/);
+    const end = nextSpace === -1 ? normalized.length : index + nextSpace;
+    tokens.push(normalized.slice(index, end));
+    index = end;
+  }
+
+  return tokens.join("");
+}
 
 function translate(text) {
   let index = 0;
@@ -136,8 +254,13 @@ function uniqueMatches(matches) {
 
 function render() {
   const source = sourceInput.value.trim();
-  const result = translate(source || "你好，我想喝咖啡。谢谢！");
+  const fallback = "nihao wo xiang he kafei xiexie";
+  const rawInput = source || fallback;
+  const chineseText = inputLooksLikePinyin(rawInput) ? pinyinToChinese(rawInput) : rawInput;
+  const result = translate(chineseText);
 
+  chinesePreview.textContent = chineseText;
+  pinyinMode.textContent = inputLooksLikePinyin(rawInput) ? "拼音转中文" : "中文直译";
   translationOutput.textContent = result.text;
   matchCount.textContent = `${result.matches.length} 个匹配`;
   candidates.innerHTML = "";

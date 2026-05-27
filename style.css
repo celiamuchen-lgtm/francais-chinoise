@@ -179,6 +179,18 @@ output {
   background: #fbfcfb;
 }
 
+.pinyin-area {
+  background: #fffdf7;
+}
+
+#chinesePreview {
+  display: block;
+  min-height: 42px;
+  margin-top: 12px;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
 .candidate-list {
   display: flex;
   flex-wrap: wrap;
