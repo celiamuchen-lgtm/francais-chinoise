@@ -1,0 +1,242 @@
+:root {
+  color-scheme: light;
+  --ink: #17201b;
+  --muted: #667069;
+  --line: #d8ded8;
+  --surface: #ffffff;
+  --surface-soft: #f3f6f4;
+  --accent: #166457;
+  --accent-strong: #0d4c42;
+  --gold: #d59b2d;
+  --rose: #b64f67;
+  --shadow: 0 20px 60px rgba(23, 32, 27, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(22, 100, 87, 0.18), rgba(213, 155, 45, 0.14)),
+    var(--surface-soft);
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+}
+
+.workspace {
+  width: min(1120px, 100%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(216, 222, 216, 0.9);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.topbar,
+.panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.05;
+  font-weight: 760;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.topbar p,
+.panel-label,
+#matchCount {
+  color: var(--muted);
+}
+
+.topbar p {
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.icon-button,
+.copy-button,
+.quick-chip,
+.candidate {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.icon-button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+}
+
+.copy-button {
+  min-height: 36px;
+  padding: 0 14px;
+  color: white;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.copy-button:focus-visible,
+.icon-button:focus-visible,
+.quick-chip:focus-visible,
+.candidate:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(213, 155, 45, 0.55);
+  outline-offset: 2px;
+}
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.panel {
+  min-height: 360px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 18px;
+}
+
+.input-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+textarea {
+  width: 100%;
+  min-height: 292px;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1.6;
+  background: transparent;
+}
+
+textarea::placeholder {
+  color: #9aa39d;
+}
+
+.output-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+output {
+  min-height: 292px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 25px;
+  line-height: 1.55;
+}
+
+.candidate-area {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: #fbfcfb;
+}
+
+.candidate-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  min-height: 44px;
+}
+
+.candidate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
+.candidate strong {
+  color: var(--accent-strong);
+}
+
+.candidate span {
+  color: var(--muted);
+}
+
+.tips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.quick-chip {
+  min-height: 38px;
+  padding: 8px 12px;
+  border-color: rgba(182, 79, 103, 0.35);
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .workspace {
+    padding: 16px;
+  }
+
+  .editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    min-height: 280px;
+  }
+
+  textarea,
+  output {
+    min-height: 210px;
+    font-size: 20px;
+  }
+}

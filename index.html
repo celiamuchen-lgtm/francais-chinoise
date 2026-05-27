@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>中文转法语输入法</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="中文转法语输入法">
+        <header class="topbar">
+          <div>
+            <h1>中文转法语输入法</h1>
+            <p>输入中文，得到可复制的法语表达。</p>
+          </div>
+          <button class="icon-button" id="clearButton" type="button" aria-label="清空">
+            <span aria-hidden="true">×</span>
+          </button>
+        </header>
+
+        <div class="editor-grid">
+          <label class="panel input-panel">
+            <span class="panel-label">中文</span>
+            <textarea id="sourceInput" placeholder="例如：你好，我想喝咖啡。谢谢！" autofocus></textarea>
+          </label>
+
+          <section class="panel output-panel" aria-live="polite">
+            <div class="panel-row">
+              <span class="panel-label">Français</span>
+              <button id="copyButton" class="copy-button" type="button">复制</button>
+            </div>
+            <output id="translationOutput">Bonjour, je voudrais boire du café. Merci !</output>
+          </section>
+        </div>
+
+        <section class="candidate-area" aria-label="候选法语词">
+          <div class="panel-row">
+            <h2>候选词</h2>
+            <span id="matchCount">0 个匹配</span>
+          </div>
+          <div id="candidates" class="candidate-list"></div>
+        </section>
+
+        <section class="tips">
+          <button class="quick-chip" type="button" data-example="你好，我叫木晨。">你好，我叫木晨。</button>
+          <button class="quick-chip" type="button" data-example="我想去巴黎。">我想去巴黎。</button>
+          <button class="quick-chip" type="button" data-example="请问洗手间在哪里？">请问洗手间在哪里？</button>
+        </section>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
